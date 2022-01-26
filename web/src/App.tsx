@@ -1,5 +1,6 @@
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
+import { BrowserRouter } from 'react-router-dom'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
@@ -10,7 +11,9 @@ const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
       <RedwoodApolloProvider>
-        <Routes />
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
       </RedwoodApolloProvider>
     </RedwoodProvider>
   </FatalErrorBoundary>

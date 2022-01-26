@@ -27,5 +27,7 @@ export const schema = gql`
     createRoom(input: CreateRoomInput!): Room! @requireAuth
     updateRoom(id: Int!, input: UpdateRoomInput!): Room! @requireAuth
     deleteRoom(id: Int!): Room! @requireAuth
+    addParticipants(roomId: Int!, userIds: [Int!]!): Room! @requireAuth
+    addTags(roomId: Int!, tags: [String!]!): Room! @requireAuth
   }
 `

@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client'
 import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
+import { tag } from '../tags/tags'
 
 export const rooms = () => {
   return db.room.findMany()
@@ -45,4 +46,39 @@ export const Room = {
     db.room.findUnique({ where: { id: root.id } }).participants(),
   tags: (_obj, { root }: ResolverArgs<ReturnType<typeof room>>) =>
     db.room.findUnique({ where: { id: root.id } }).tags(),
+}
+
+interface AddParticipantsArgs {
+  roomId: number
+  userIds: Array<number>
+}
+
+export const addParticipants = ({ roomId, userIds }: AddParticipantsArgs) => {
+  return db.room.update({
+    data: {
+      participants: {
+        connect: userIds.map((userId) => ({ id: userId })),
+      },
+    },
+    where: { id: roomId },
+  })
+}
+
+interface AddTagsArgs {
+  roomId: number
+  tags: Array<string>
+}
+
+export const addTags = ({ roomId, tags }: AddTagsArgs) => {
+  return db.room.update({
+    data: {
+      tags: {
+        connectOrCreate: tags.map((tag) => ({
+          where: { name: tag },
+          create: { name: tag },
+        })),
+      },
+    },
+    where: { id: roomId },
+  })
 }
