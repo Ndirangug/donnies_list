@@ -1,8 +1,8 @@
 import { render, screen } from '@redwoodjs/testing/web'
-import { Loading, Empty, Failure, Success } from './RoomCardCell'
-import { standard } from './RoomCardCell.mock'
+import { Loading, Empty, Failure, Success } from './RoomCell'
+import { standard } from './RoomCell.mock'
 
-describe('RoomCardCell', () => {
+describe('RoomCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)

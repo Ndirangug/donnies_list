@@ -1,10 +1,6 @@
 import { Card, CardContent, Typography, Grid, Avatar } from '@mui/material'
+import StringAvatar from 'src/components/StringAvatar/StringAvatar'
 
-function stringAvatar(name: string) {
-  return {
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-  }
-}
 
 const RoomCard = ({ room }) => {
   return (
@@ -19,11 +15,7 @@ const RoomCard = ({ room }) => {
             {room.participants.map((participant) => {
               return (
                 <Grid key={participant.id} item xs={3}>
-                  <Avatar
-                    {...stringAvatar(
-                      `${participant.firstName} ${participant.lastName}`
-                    )}
-                  />
+                  <StringAvatar string={`${participant.firstName} ${participant.lastName}`}/>
                 </Grid>
               )
             })}

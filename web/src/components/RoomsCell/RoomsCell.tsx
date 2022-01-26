@@ -32,7 +32,11 @@ export const Success = ({ rooms }: CellSuccessProps<RoomsQuery>) => {
   return (
     <div>
       {rooms.map((room) => {
-        return <RoomCard room={room} key={room.id} />
+        return (
+          <div key={room.id} className="m-10">
+            <RoomCard room={room} />
+          </div>
+        )
       })}
     </div>
   )

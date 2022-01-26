@@ -46,7 +46,3 @@ export const User = {
   category: (_obj, { root }: ResolverArgs<ReturnType<typeof user>>) =>
     db.user.findUnique({ where: { id: root.id } }).category(),
 }
-
-export const addToRoom = ({id,roomId}) => {
-  // TODO: implement
-}

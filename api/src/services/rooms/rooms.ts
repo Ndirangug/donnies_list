@@ -2,7 +2,6 @@ import type { Prisma } from '@prisma/client'
 import type { ResolverArgs } from '@redwoodjs/graphql-server'
 
 import { db } from 'src/lib/db'
-import { tag } from '../tags/tags'
 
 export const rooms = () => {
   return db.room.findMany()
@@ -81,4 +80,8 @@ export const addTags = ({ roomId, tags }: AddTagsArgs) => {
     },
     where: { id: roomId },
   })
+}
+
+export const removeParticipant = ({ roomId, userId }) => {
+  // TODO: implement
 }

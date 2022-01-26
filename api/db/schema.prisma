@@ -20,6 +20,7 @@ model User {
   lastName   String
   email      String?
   peerId     String?
+  online     Boolean   @default(false)
   roomId     Int?
   categoryId Int
   room       Room?     @relation(fields: [roomId], references: [id])

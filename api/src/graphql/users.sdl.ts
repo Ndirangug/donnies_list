@@ -7,6 +7,7 @@ export const schema = gql`
     email: String
     peerId: String
     roomId: Int
+    online: Boolean!
     categoryId: Int!
     room: Room
     category: Category
@@ -43,6 +44,7 @@ export const schema = gql`
     email: String
     peerId: String
     roomId: Int
+    online: Boolean
     categoryId: Int
     role: Role
   }
@@ -51,6 +53,5 @@ export const schema = gql`
     createUser(input: CreateUserInput!): User! @requireAuth
     updateUser(id: Int!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: Int!): User! @requireAuth
-    #addToRoom(id: Int!, roomId: Int!): User! @requireAuth
   }
 `
