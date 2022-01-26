@@ -1,31 +1,31 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
-  binaryTargets   = "native"
+  provider      = "prisma-client-js"
+  // previewFeatures = ["mongoDb"]
+  binaryTargets = "native"
 }
 
 // Define your own datamodels here and run `yarn redwood prisma migrate dev`
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
 model User {
-  id                 String            @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  username           String            @unique
-  firstName          String
-  lastName           String
-  email              String?
-  peerId             String?
-  room               Room?             @relation(fields: [roomId], references: [id])
-  category           Category?         @relation(fields: [categoryId], references: [id])
-  areasOfExpertise   AreaOfExpertise[] @relation(fields: [areaofExpertiseIds])
-  areaofExpertiseIds String[]          @db.Array(ObjectId)
-  role               Role              @default(AUDIENCE)
-  roomId             String?           @db.ObjectId
-  categoryId         String            @db.ObjectId
+  //id               String            @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id         Int       @id @default(autoincrement())
+  username   String    @unique
+  firstName  String
+  lastName   String
+  email      String?
+  peerId     String?
+  roomId     Int?
+  categoryId Int
+  room       Room?     @relation(fields: [roomId], references: [id])
+  category   Category? @relation(fields: [categoryId], references: [id])
+  // areasOfExpertise AreaOfExpertise[]
+  role       Role      @default(AUDIENCE)
 }
 
 enum Role {
@@ -36,22 +36,32 @@ enum Role {
 }
 
 model Room {
-  id           String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  //id           String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id           Int      @id @default(autoincrement())
   name         String   @unique
   title        String
   createdAt    DateTime @default(now())
   participants User[]
+  tags         Tag[]
 }
 
 model Category {
-  id    String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  //id    String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id    Int    @id @default(autoincrement())
   name  String @unique
   users User[]
 }
 
-model AreaOfExpertise {
-  id      String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  name    String   @unique
-  userIds String[] @db.Array(ObjectId)
-  users   User[]   @relation(fields: [userIds])
+// model AreaOfExpertise {
+//   //id      String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+//   id    Int    @id @default(autoincrement())
+//   name  String @unique
+//   users User[]
+// }
+
+model Tag {
+  //id      String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  rooms Room[]
 }

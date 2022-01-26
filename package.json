@@ -8,6 +8,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.5",
     "@redwoodjs/core": "0.42.1"
   },
   "eslintConfig": {
