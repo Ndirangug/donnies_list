@@ -1,6 +1,8 @@
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import { BrowserRouter } from 'react-router-dom'
+import { makeAutoObservable } from 'mobx'
+import { observer } from 'mobx-react'
 
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'

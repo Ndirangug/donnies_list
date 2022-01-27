@@ -8,6 +8,8 @@ import {
 } from '@mui/material'
 import StringAvatar from 'src/components/StringAvatar/StringAvatar'
 import { Phone } from '@mui/icons-material'
+import { userStore } from 'src/store/user_store'
+import { socket } from 'src/lib/socket'
 
 const UserCard = ({ user }) => {
   return (
@@ -30,11 +32,7 @@ const UserCard = ({ user }) => {
               {`${user.firstName} ${user.lastName}`}
             </Typography>
             <p>{user.online ? 'online' : 'offline'}</p>
-            <IconButton
-              onClick={() => {
-                console.log('call')
-              }}
-            >
+            <IconButton onClick={() => {}}>
               <Phone />
             </IconButton>
           </Grid>

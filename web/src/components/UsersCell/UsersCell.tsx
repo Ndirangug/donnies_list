@@ -1,5 +1,8 @@
 import type { UsersQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { userStore } from 'src/store/user_store'
+import { observer } from 'mobx-react'
+
 import UserCard from '../UserCard/UserCard'
 
 export const QUERY = gql`
@@ -23,9 +26,11 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ users }: CellSuccessProps<UsersQuery>) => {
-  return (
+  userStore.fillUsers(users)
+
+  const UsersView = observer(({ store }) => (
     <div>
-      {users.map((user) => {
+      {store.allUsers.map((user) => {
         return (
           <div key={user.id} className="m-10">
             <UserCard user={user} />
@@ -33,5 +38,7 @@ export const Success = ({ users }: CellSuccessProps<UsersQuery>) => {
         )
       })}
     </div>
-  )
+  ))
+
+  return <UsersView store={userStore} />
 }

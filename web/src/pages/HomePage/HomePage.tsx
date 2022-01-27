@@ -7,6 +7,8 @@ import RoomsCell from 'src/components/RoomsCell/RoomsCell'
 import HomeBottomSheet from 'src/components/HomeBottomSheet/HomeBottomSheet'
 import { Button } from '@mui/material'
 import { bottomSheet } from 'react-simple-bottom-sheet'
+import { socket, peer } from 'src/lib/socket'
+
 
 const HomePage = () => {
   const [searchParams] = useSearchParams()
@@ -16,6 +18,12 @@ const HomePage = () => {
   if (userId === null || userId === undefined) {
     return <div>Not logged in</div>
   }
+
+
+  peer.on('open', (peerId) => {
+    console.log('My peer ID is: ' + peerId)
+    socket.emit('user_online', { userId, peerId })
+  })
 
   const handleOpen = () => {
     console.log('handle open ' + bottomOpen)

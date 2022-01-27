@@ -7,6 +7,14 @@ export const users = () => {
   return db.user.findMany()
 }
 
+// export const userOnline = () => {
+//   setInterval(() => {
+//     console.log('run sub')
+
+//     return db.user.findFirst({ where: { online: false } })
+//   }, 1000)
+// }
+
 export const user = ({ id }: Prisma.UserWhereUniqueInput) => {
   return db.user.findUnique({
     where: { id },
