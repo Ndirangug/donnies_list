@@ -1,8 +1,8 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, observable } from 'mobx'
 import { User } from 'types/graphql'
 
 class UserStore {
-  allUsers: User[] = []
+  allUsers = observable.array<User>([])
 
   constructor() {
     makeAutoObservable(this)
@@ -10,7 +10,13 @@ class UserStore {
 
   updateUser(user: User) {
     const index = this.allUsers.findIndex((u) => u.id === user.id)
-    this.allUsers[index] = user
+    this.allUsers.map((u, i) => {
+      if (user.id === u.id) {
+        return user
+      }
+
+      return u
+    })
   }
 
   fillUsers(users: User[]) {

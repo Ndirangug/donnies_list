@@ -32,7 +32,11 @@ const UserCard = ({ user }) => {
               {`${user.firstName} ${user.lastName}`}
             </Typography>
             <p>{user.online ? 'online' : 'offline'}</p>
-            <IconButton onClick={() => {}}>
+            <IconButton
+              onClick={() => {
+                socket.emit('join_room', {})
+              }}
+            >
               <Phone />
             </IconButton>
           </Grid>

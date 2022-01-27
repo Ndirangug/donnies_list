@@ -24,7 +24,9 @@ const HomePage = () => {
 
   peer.on('open', (peerId) => {
     console.log('My peer ID is: ' + peerId)
-    socket.emit('user_online', { userId, peerId })
+    alert(`My peer ID is: ${peerId}`)
+    const result = socket.emit('user_online', { userId, peerId })
+    alert(result.connected)
     mutateUserPeerOnline({
       variables: { id: parseInt(userId), peerId, isOnline: true },
     })

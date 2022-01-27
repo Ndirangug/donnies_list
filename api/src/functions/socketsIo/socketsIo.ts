@@ -7,7 +7,8 @@ import http from 'http'
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:8910' }))
+//app.use(cors({ origin: 'http://localhost:8910' }))
+app.use(cors())
 const server = http.createServer(app)
 import { Server } from 'socket.io'
 import { user } from 'src/services/users/users'
@@ -50,10 +51,9 @@ function setupWebSockets() {
   io.on('connection', (socket) => {
     console.log('a user connected')
 
-    socket.on('user_online', (userId, peerId) => {
+    socket.on('user_online', ({ userId, peerId }) => {
       console.log('user_online ', userId, peerId)
-
-      socket.emit('user_online', userId, peerId)
+      socket.broadcast.emit('user_online', { userId, peerId })
     })
 
     socket.on('join_room', (room, user) => {
