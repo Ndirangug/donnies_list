@@ -52,6 +52,8 @@ function setupWebSockets() {
 
     socket.on('user_online', (userId, peerId) => {
       console.log('user_online ', userId, peerId)
+
+      socket.emit('user_online', userId, peerId)
     })
 
     socket.on('join_room', (room, user) => {

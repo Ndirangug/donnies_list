@@ -8,21 +8,26 @@ import HomeBottomSheet from 'src/components/HomeBottomSheet/HomeBottomSheet'
 import { Button } from '@mui/material'
 import { bottomSheet } from 'react-simple-bottom-sheet'
 import { socket, peer } from 'src/lib/socket'
-
+import { useMutation } from '@redwoodjs/web'
+import { SET_USER_ONLINE_PEER } from 'src/lib/update_user'
 
 const HomePage = () => {
   const [searchParams] = useSearchParams()
   const [userId] = useState(searchParams.get('user'))
   const [bottomOpen, setBottomOpen] = useState(false)
 
+  const [mutateUserPeerOnline] = useMutation(SET_USER_ONLINE_PEER)
+
   if (userId === null || userId === undefined) {
     return <div>Not logged in</div>
   }
 
-
   peer.on('open', (peerId) => {
     console.log('My peer ID is: ' + peerId)
     socket.emit('user_online', { userId, peerId })
+    mutateUserPeerOnline({
+      variables: { id: parseInt(userId), peerId, isOnline: true },
+    })
   })
 
   const handleOpen = () => {
