@@ -1,3 +1,5 @@
+var fs = require('fs')
+
 /**
  * This file allows you to configure the Fastify Server settings
  * used by the RedwoodJS dev server.
@@ -18,6 +20,14 @@ const config = {
   logger: {
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
   },
+  // https: {
+  //   // hostname: 'encrypted.google.com',
+  //   // port: 443,
+  //   // path: '/',
+  //   // method: 'GET',
+  //   key: fs.readFileSync('localhost.key'),
+  //   cert: fs.readFileSync('localhost.crt'),
+  // },
 }
 
 module.exports = config

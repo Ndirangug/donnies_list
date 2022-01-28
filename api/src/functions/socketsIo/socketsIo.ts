@@ -3,13 +3,20 @@ import { logger } from 'src/lib/logger'
 
 import express from 'express'
 import cors from 'cors'
-import http from 'http'
+import https from 'https'
+import * as fs from 'fs'
 
 const app = express()
 
 //app.use(cors({ origin: 'http://localhost:8910' }))
 app.use(cors())
-const server = http.createServer(app)
+const server = https.createServer(
+  {
+    key: fs.readFileSync('api/certificates/localhost.key'),
+    cert: fs.readFileSync('api/certificates/localhost.crt'),
+  },
+  app
+)
 import { Server } from 'socket.io'
 import { user } from 'src/services/users/users'
 const io = new Server(server, { cors: { origin: '*' } })
@@ -60,6 +67,10 @@ function setupWebSockets() {
       console.log('join_room', user, room)
       socket.join(room) //join room.
       socket.to(room).emit('join_room', user) //send to room.
+    })
+
+    socket.on('peer starting call', (user) => {
+      console.log('placing call', user)
     })
 
     //TODO handle this client socket dosconnected

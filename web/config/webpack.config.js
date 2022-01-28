@@ -20,6 +20,7 @@ module.exports = (config, { mode }) => {
       return data
     })
   )
+  config.devServer.https = true
 
   return config
 }

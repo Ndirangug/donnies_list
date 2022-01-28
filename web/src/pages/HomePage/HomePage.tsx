@@ -7,40 +7,33 @@ import RoomsCell from 'src/components/RoomsCell/RoomsCell'
 import HomeBottomSheet from 'src/components/HomeBottomSheet/HomeBottomSheet'
 import { Button } from '@mui/material'
 import { bottomSheet } from 'react-simple-bottom-sheet'
-import { socket, peer } from 'src/lib/socket'
+import { socket } from 'src/lib/socket-events'
+import { peer, setOnlinePeer } from 'src/lib/peer-events'
 import { useMutation } from '@redwoodjs/web'
 import { SET_USER_ONLINE_PEER } from 'src/lib/update_user'
+import { userStore } from 'src/store/user_store'
 
 const HomePage = () => {
+  // call all necesaary hooks
   const [searchParams] = useSearchParams()
   const [userId] = useState(searchParams.get('user'))
   const [bottomOpen, setBottomOpen] = useState(false)
-
   const [mutateUserPeerOnline] = useMutation(SET_USER_ONLINE_PEER)
 
+  //if not logged in just return at this point
   if (userId === null || userId === undefined) {
     return <div>Not logged in</div>
   }
 
-  peer.on('open', (peerId) => {
-    console.log('My peer ID is: ' + peerId)
-    alert(`My peer ID is: ${peerId}`)
-    const result = socket.emit('user_online', { userId, peerId })
-    alert(result.connected)
-    mutateUserPeerOnline({
-      variables: { id: parseInt(userId), peerId, isOnline: true },
-    })
-  })
+  // at this point user is logged in and online
+  setOnlinePeer(userId, mutateUserPeerOnline)
+  // userStore
 
   const handleOpen = () => {
-    console.log('handle open ' + bottomOpen)
-
     bottomSheet.create({
       content: <HomeBottomSheet />,
       onClose() {
         setBottomOpen(false)
-
-        console.log('on close ' + bottomOpen)
       },
     })
   }
@@ -72,6 +65,12 @@ const HomePage = () => {
 
         <div>
           <HomeBottomSheet />
+        </div>
+
+        <div className="audio fixed left-0 top-0">
+          <audio id="audio" controls>
+            <track kind="captions"></track>
+          </audio>
         </div>
       </div>
     </>

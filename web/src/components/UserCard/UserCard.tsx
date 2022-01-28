@@ -9,7 +9,8 @@ import {
 import StringAvatar from 'src/components/StringAvatar/StringAvatar'
 import { Phone } from '@mui/icons-material'
 import { userStore } from 'src/store/user_store'
-import { socket } from 'src/lib/socket'
+import { socket } from 'src/lib/socket-events'
+import { makeCall } from 'src/lib/peer-events'
 
 const UserCard = ({ user }) => {
   return (
@@ -34,7 +35,10 @@ const UserCard = ({ user }) => {
             <p>{user.online ? 'online' : 'offline'}</p>
             <IconButton
               onClick={() => {
-                socket.emit('join_room', {})
+                console.log('make call')
+                console.log(user)
+
+                makeCall(user.peerId)
               }}
             >
               <Phone />

@@ -3,24 +3,30 @@ import { User } from 'types/graphql'
 
 class UserStore {
   allUsers = observable.array<User>([])
+  currentUser: User | null = null
 
   constructor() {
     makeAutoObservable(this)
   }
 
   updateUser(user: User) {
-    const index = this.allUsers.findIndex((u) => u.id === user.id)
-    this.allUsers.map((u, i) => {
-      if (user.id === u.id) {
-        return user
-      }
-
-      return u
+    const oldUser = this.allUsers.find((u) => {
+      return u.id == user.id
     })
+
+    Object.assign(oldUser, user)
   }
 
   fillUsers(users: User[]) {
-    this.allUsers = users
+    this.allUsers.push(...users)
+  }
+
+  setCurrentUser(userId: number) {
+    const user = this.allUsers.find((u) => {
+      return u.id == userId
+    })
+
+    this.currentUser = user
   }
 }
 
