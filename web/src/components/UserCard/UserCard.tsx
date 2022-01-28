@@ -14,9 +14,9 @@ import { makeCall } from 'src/lib/peer-events'
 
 const UserCard = ({ user }) => {
   return (
-    <Card sx={{ maxWidth: 600, minWidth: 400 }}>
+    <Card sx={{ maxWidth: 'max-content', minWidth: 300, padding: '0.5em' }}>
       <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid item xs={3}>
             <Badge
               overlap="circular"
@@ -28,12 +28,16 @@ const UserCard = ({ user }) => {
             </Badge>
           </Grid>
 
-          <Grid item xs={9}>
-            <Typography gutterBottom variant="h6" component="div">
+          <Grid item xs={8}>
+            <Typography gutterBottom variant="subtitle1" component="div">
               {`${user.firstName} ${user.lastName}`}
             </Typography>
             <p>{user.online ? 'online' : 'offline'}</p>
+          </Grid>
+
+          <Grid item xs={1}>
             <IconButton
+              className="mr-8"
               onClick={() => {
                 console.log('make call')
                 console.log(user)

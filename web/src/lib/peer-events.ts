@@ -7,8 +7,9 @@ export const peer = new Peer(null, {
     iceServers: [
       { urls: 'stun:stun.donnieslist.com' },
       {
-        urls: 'turn:donnieslist@turn.donnieslist.com',
+        urls: 'turn:turn.donnieslist.com',
         credential: 'donnieslist',
+        username: 'donnieslist',
       },
     ],
   },
@@ -71,8 +72,8 @@ function endCall(stream: MediaStream) {
 peer.on('call', async (call) => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: true,
+      audio: true,
+      video: false,
     })
 
     call.answer(stream)
@@ -86,6 +87,7 @@ peer.on('call', async (call) => {
     })
   } catch (err) {
     console.log('Failed to get local stream')
+    log.error(err.name)
     console.error(err)
   }
 })

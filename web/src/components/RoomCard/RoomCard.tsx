@@ -1,12 +1,17 @@
 import { Card, CardContent, Typography, Grid, Avatar } from '@mui/material'
 import StringAvatar from 'src/components/StringAvatar/StringAvatar'
 
-
 const RoomCard = ({ room }) => {
   return (
-    <Card sx={{ maxWidth: 600, minWidth: 400 }}>
+    <Card sx={{ maxWidth: 600, minWidth: 300 }}>
       <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography
+          sx={{ textTransform: 'capitalize' }}
+          gutterBottom
+          className=""
+          variant="h6"
+          component="div"
+        >
           {room.title}
         </Typography>
 
@@ -15,7 +20,9 @@ const RoomCard = ({ room }) => {
             {room.participants.map((participant) => {
               return (
                 <Grid key={participant.id} item xs={3}>
-                  <StringAvatar string={`${participant.firstName} ${participant.lastName}`}/>
+                  <StringAvatar
+                    string={`${participant.firstName} ${participant.lastName}`}
+                  />
                 </Grid>
               )
             })}

@@ -51,7 +51,7 @@ const HomePage = () => {
           <RoomsCell />
         </div>
 
-        <Button
+        {/* <Button
           sx={{ maxWidth: 'max-content', position: 'fixed', bottom: '1em' }}
           variant="contained"
           size="large"
@@ -61,7 +61,7 @@ const HomePage = () => {
           }}
         >
           CREATE ROOM
-        </Button>
+        </Button> */}
 
         <div>
           <HomeBottomSheet />
