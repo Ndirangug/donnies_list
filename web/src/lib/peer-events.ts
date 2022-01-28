@@ -1,7 +1,26 @@
 import Peer from 'peerjs'
 import { socket } from './socket-events'
 
-export const peer = new Peer()
+export const peer = new Peer(null, {
+  debug: 3,
+  config: {
+    iceServers: [
+      { urls: 'stun:stun.donnieslist.com' },
+      {
+        urls: 'turn:donnieslist@turn.donnieslist.com',
+        credential: 'donnieslist',
+      },
+    ],
+  },
+})
+
+// {
+//   config: {
+//     'iceServers': [
+//       { url: 'stun:stun.l.google.com:19302' },
+//       { url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
+//     ]
+//   }
 
 //type mutateUserPeerOnline = (options?: MutationFunctionOptions<any, GraphQLOperationVariables, DefaultContext, ApolloCache<any>>) => Promise<...>
 
